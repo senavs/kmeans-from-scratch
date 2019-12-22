@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 import numpy as np
 
 from model.point import Point
@@ -115,14 +113,11 @@ class KMeans:
             :type: dict
         """
 
-        history_data = defaultdict(list)
         self.centroids = self.inti_centroids(x)
         for epoch in range(epochs):
             self.cluster_labels = self.assign_clusters(x)
-            history_data['centroids'].append(self.centroids)
-            history_data['cluster_labels'].append(self.cluster_labels)
             self.centroids = self.update_centroids(x)
-        return history_data
+        return self
 
     def predict(self, x):
         """Predict x based on fitted self.clusters_labels
