@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import numpy as np
 
 from model.point import Point
@@ -109,13 +111,18 @@ class KMeans:
                 [[1, 2], [2, 3], [3, 4], [4, 5]]
         :param epochs: number of epochs to train the model
             :type: int
-        :return: None
+        :return: history_data with all self.centroids and self.cluster_labels during fitting
+            :type: dict
         """
 
+        history_data = defaultdict(list)
         self.centroids = self.inti_centroids(x)
         for epoch in range(epochs):
             self.cluster_labels = self.assign_clusters(x)
+            history_data['centroids'].append(self.centroids)
+            history_data['cluster_labels'].append(self.cluster_labels)
             self.centroids = self.update_centroids(x)
+        return history_data
 
     def predict(self, x):
         """Predict x based on fitted self.clusters_labels
